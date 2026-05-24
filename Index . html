@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+body{
+text-align:center;
+font-family:Arial;
+background:#dff4ff;
+overflow:hidden;
+}
+
+#kitty{
+font-size:100px;
+position:relative;
+left:0px;
+transition:.3s;
+}
+
+button{
+padding:10px 15px;
+margin:5px;
+font-size:16px;
+}
+
+#status{
+font-size:20px;
+margin:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Forever Kitty 🐱</h1>
+
+<div id="kitty">🐱</div>
+
+<div id="status"></div>
+
+<button onclick="petKitty()">❤️ Pet</button>
+<button onclick="feedKitty()">🍖 Feed</button>
+<button onclick="fishToy()">🐟 Fish Toy</button>
+<button onclick="sleepKitty()">😴 Sleep</button>
+
+<p id="message"></p>
+
+<script>
+
+let hunger = 100
+let happiness = 100
+let energy = 100
+let bond = 0
+
+const kitty =
+document.getElementById("kitty")
+
+function update(){
+
+if(hunger<0) hunger=0
+if(happiness<0) happiness=0
+if(energy<0) energy=0
+
+if(hunger>100) hunger=100
+if(happiness>100) happiness=100
+if(energy>100) energy=100
+if(bond>100) bond=100
+
+let mood="😺 Happy"
+
+if(hunger<30)
+mood="🍗 Hungry"
+
+if(energy<25)
+mood="😴 Sleepy"
+
+if(happiness<30)
+mood="😿 Sad"
+
+document.getElementById("status")
+.innerHTML=
+
+`
+❤️ Happiness: ${happiness}<br>
+🍖 Hunger: ${hunger}<br>
+⚡ Energy: ${energy}<br>
+💕 Bond: ${bond}<br>
+${mood}
+`
+
+kitty.textContent=
+happiness<30 ? "🙀":"🐱"
+
+}
+
+function petKitty(){
+
+happiness+=8
+bond+=2
+
+message("Purrrrr ❤️")
+
+bounce()
+
+update()
+
+}
+
+function feedKitty(){
+
+hunger+=15
+bond+=1
+
+message("Nom nom 🍖")
+
+bounce()
+
+update()
+
+}
+
+function fishToy(){
+
+happiness+=15
+energy-=5
+bond+=3
+
+message("Kitty attacks fishy! 🐟")
+
+bounce()
+
+update()
+
+}
+
+function sleepKitty(){
+
+energy+=30
+
+message("Zzzzz 😴")
+
+update()
+
+}
+
+function message(text){
+
+document
+.getElementById("message")
+.innerText=text
+
+}
+
+function bounce(){
+
+kitty.style.transform=
+"scale(1.2)"
+
+setTimeout(()=>{
+
+kitty.style.transform=
+"scale(1)"
+
+},200)
+
+}
+
+setInterval(()=>{
+
+hunger-=2
+energy-=1
+happiness-=1
+
+update()
+
+},5000)
+
+let walk=0
+
+setInterval(()=>{
+
+walk+=
+Math.random()*100-50
+
+walk=
+Math.max(
+-150,
+Math.min(150,walk)
+)
+
+kitty.style.left=
+walk+"px"
+
+},2500)
+
+update()
+
+</script>
+
+</body>
+</html>
